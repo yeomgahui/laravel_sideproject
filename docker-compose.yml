@@ -1,0 +1,61 @@
+version : "3.7"
+networks:
+  laravel:
+
+
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    ports:
+      - "8088:80"
+    volumes:
+      - ./:/var/www/html
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+      - mariadb
+    networks:
+      - laravel
+  mariadb:
+    image: mariadb:10.3.22
+    container_name: mariadb
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "4306:3306"
+    volumes:
+      - ./mariadb:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: root
+      MYSQL_USER: gahui
+      MYSQL_PASSWORD: 1234
+      MYSQL_ROOT_PASSWORD: 1234
+      SERVICE_TAGS: root
+      SERVICE_NAME: mariadb
+    networks:
+      - laravel
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "9000:9000"
+    networks:
+      - laravel
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: myadmin
+    restart: always
+    ports: 
+      - "8083:80"
+    environment: 
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+    depends_on: 
+      - mariadb
+    networks:
+      - laravel
