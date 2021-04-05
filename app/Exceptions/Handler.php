@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -26,6 +27,15 @@ class Handler extends ExceptionHandler
         'password',
         'password_confirmation',
     ];
+
+
+    public function render($request, Throwable $e)
+    {
+        if ($e instanceof ValidationException) {
+            return response()->invalidError($e);
+        }
+        return response()->error($e);
+    }
 
     /**
      * Register the exception handling callbacks for the application.
