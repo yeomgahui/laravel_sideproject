@@ -20,10 +20,10 @@ class SignUpRequest extends FormRequest
         ];
     }
 
-    public function messages()
-    {
-        return [
-            'email.required' => 'email is required',
-        ];
-    }
+    // public function messages()
+    // {
+    //     return [
+    //         'email.required' => 'email is required',
+    //     ];
+    // }
 }

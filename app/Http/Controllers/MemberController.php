@@ -12,6 +12,7 @@ class MemberController extends Controller
     //로그인
     public function signIn(Request $request)
     {
+        dd($request);
         dd('test');
     }
 
