@@ -32,7 +32,8 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if ($e instanceof ValidationException) {
-            return response()->invalidError($e);
+
+            return response()->json(['message' => $e->errors(), 'status' => $e->status]);
         }
         return response()->error($e);
     }
