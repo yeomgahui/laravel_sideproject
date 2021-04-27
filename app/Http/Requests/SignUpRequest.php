@@ -15,7 +15,7 @@ class SignUpRequest extends FormRequest
     {
         return [
             'email' => 'required|email|unique:users',
-            'password' => 'required|regex',
+            'password' => 'required|regex:/^(?!.*[\s])(?=.*[!@#$%^&*-])(?=.*\w).{8,15}$/|min:8',
             'password_confirm' => 'required|same:password',
         ];
     }
