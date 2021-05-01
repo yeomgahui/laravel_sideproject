@@ -29,14 +29,58 @@ class Handler extends ExceptionHandler
     ];
 
 
-    public function render($request, Throwable $e)
-    {
-        if ($e instanceof ValidationException) {
+    // public function render($request, Throwable $e)
+    // {
+    //     if ($e instanceof ValidationException) {
+    //         return $this->convertValidationExceptionToResponse($e, $request);
 
-            return response()->json(['message' => $e->errors(), 'status' => $e->status]);
-        }
-        return response()->error($e);
-    }
+    //         // return response()->json(['message' => $e->errors(), 'status' => $e->status]);
+    //     }
+    //     // dd($e);
+    //     return response()->error($e);
+    // }
+
+    /**
+     * Render an exception into an HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $e
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @throws \Throwable
+     */
+    // public function render($request, Throwable $e)
+    // {
+    //     if (method_exists($e, 'render') && $response = $e->render($request)) {
+    //         return Router::toResponse($request, $response);
+    //     } elseif ($e instanceof Responsable) {
+    //         return $e->toResponse($request);
+    //     }
+
+    //     $e = $this->prepareException($this->mapException($e));
+
+    //     foreach ($this->renderCallbacks as $renderCallback) {
+    //         if (is_a($e, $this->firstClosureParameterType($renderCallback))) {
+    //             $response = $renderCallback($e, $request);
+
+    //             if (!is_null($response)) {
+    //                 return $response;
+    //             }
+    //         }
+    //     }
+
+    //     if ($e instanceof HttpResponseException) {
+    //         return $e->getResponse();
+    //     } elseif ($e instanceof AuthenticationException) {
+    //         return $this->unauthenticated($request, $e);
+    //     } elseif ($e instanceof ValidationException) {
+    //         return $this->convertValidationExceptionToResponse($e, $request);
+    //     }
+
+    //     return $request->expectsJson()
+    //         ? $this->prepareJsonResponse($request, $e)
+    //         : $this->prepareResponse($request, $e);
+    // }
 
     /**
      * Register the exception handling callbacks for the application.
